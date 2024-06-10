@@ -14,24 +14,49 @@ app.all('/', (req, res) => {
 })
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 app.use(express.json())
+const { Sequelize, DataTypes } = require('sequelize')
+const sequelize = new Sequelize('sqlite:./db.sqlite3')
+
+const Todo = sequelize.define('table_1', {
+    // id: {
+    //     type: DataTypes.BIGINT,
+    //     primaryKey: true,
+    //     unique: true,
+    //     autoIncrement: true,
+    //     allowNull: false,
+    //     comment: 'myComment',
+    //     field: 'customName',
+    //     defaultValue: 'default_value',
+
+    // },
+    title: {
+        type: DataTypes.STRING,
+        allowNull: false,
+
+    },
+    description: DataTypes.TEXT,
+    isDone: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false
+    },
+    priority: {
+        type: DataTypes.TINYINT,
+        allowNull: false,
+        defaultValue: 0,
+    },
+    // createdDate: {
+    //     type: DataTypes.DATE,
+
+    // }
+
+})
+sequelize.sync({ force: true })
+sequelize.authenticate()
+    .then(() => console.log('DB Connected'))
+    .catch(() => console.log('DB not connected'))
+
+
 
 const errorHandler = (err, req, res, next) => {
     const errorStatusCode = res?.errorStatusCode || 500
