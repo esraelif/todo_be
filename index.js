@@ -1,0 +1,45 @@
+'use strict'
+
+
+const express = require('express')
+const app = express()
+
+require('dotenv').config()
+const PORT = process.env?.PORT || 8000
+const HOST = process.env?.HOST || '127.0.0.1'
+
+app.all('/', (req, res) => {
+    res.send('Todo App')
+
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+app.use(express.json())
+
+const errorHandler = (err, req, res, next) => {
+    const errorStatusCode = res?.errorStatusCode || 500
+    res.status(errorStatusCode).send({
+        error: true,
+        status: false,
+        message: err.message,
+
+    })
+}
+app.listen(PORT, () => console.log(`server runned http://${HOST}:${PORT}`))
