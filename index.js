@@ -160,18 +160,9 @@ router.delete('/todos/:id', async (req, res) => {
 })
 
 app.use(router)
-// error control
-const errorHandler = (err, req, res, next) => {
-    const errorStatusCode = res?.errorStatusCode || 500
-    res.status(errorStatusCode).send({
-        error: true,
-        status: false,
-        message: err.message,
-        // cause: err.cause,
-        // stack: err.stack
-    })
-}
-app.use(errorHandler)
+
+
+app.use(require('./src/middlewares/errorHandler'))
 
 app.listen(PORT, () => console.log(`server runned http://${HOST}:${PORT}`))
 
